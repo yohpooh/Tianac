@@ -1,12 +1,50 @@
 extends CharacterBody2D
 
-const speed = 400
-const jumpPower = -1800
+@onready var timer: Timer = $Timer
+@export var gravity = 250
+
+var timerCount
+
+func _physics_process(delta):
+	playerGravity(delta)
+	playerMovement()
+	playerJump()
+	
+func playerMovement():
+	move_and_slide()
+	
+func playerGravity(delta):
+	if not is_on_floor():
+		velocity.y += gravity * delta
+		
+func  playerJump():
+	if Input.is_action_just_pressed("ui_accept"):
+		timerCount = -1
+		timer.start()
+	if  Input.is_action_just_released("ui_accept"):
+		timer.stop()
+		if timerCount < 0:
+			print("tapped")
+			#print(timerCount)
+		else:
+			print("hold for ", timerCount ," second/s")
+			print(timerCount)
+		#timerCount = -1
+			
+func timerTimeOut():
+	timerCount += 1
+	print("charging")
+	print(timerCount)
+	#queue_free()
+
+"""
+const speed = 350
+const jumpPower = -2500
 
 const acceleration = 50
 const friction = 70
 
-const gravity = 120
+const gravity = 150
 
 const maxJumps = 2
 var currentJumps = 1
@@ -51,3 +89,7 @@ func jump():
 	
 func playerMovement():
 	move_and_slide()
+"""
+
+
+
