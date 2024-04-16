@@ -1,16 +1,19 @@
 extends CharacterBody2D
 
 @onready var timer: Timer = $Timer
-@export var gravity = 250
+@export var gravity = 500
 
 var timerCount
+var bIsJumping
+var jumpPower
+var jumpMax = -600
 
 func _physics_process(delta):
 	playerGravity(delta)
 	playerMovement()
-	playerJump()
 	
 func playerMovement():
+	playerJump()
 	move_and_slide()
 	
 func playerGravity(delta):
@@ -19,17 +22,31 @@ func playerGravity(delta):
 		
 func  playerJump():
 	if Input.is_action_just_pressed("ui_accept"):
-		timerCount = -1
+		timerCount = 0
+		jumpPower = 0
+		bIsJumping = true
 		timer.start()
 	if  Input.is_action_just_released("ui_accept"):
+		bIsJumping = false
 		timer.stop()
-		if timerCount < 0:
+		if timerCount < 1:
 			print("tapped")
+			velocity.y = jumpPower
 			#print(timerCount)
 		else:
 			print("hold for ", timerCount ," second/s")
-			print(timerCount)
-		#timerCount = -1
+			velocity.y = jumpPower
+			
+	if bIsJumping:
+		if timerCount < 3:
+			jumpPower -= 6
+			print("jumpPower::if " , jumpPower)
+		else:
+			jumpPower = jumpMax
+			print("jumpPower::else " , jumpPower)
+	else: 
+		pass
+		#velocity.y += gravity
 			
 func timerTimeOut():
 	timerCount += 1
