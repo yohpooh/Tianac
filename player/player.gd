@@ -6,13 +6,27 @@ extends CharacterBody2D
 var timerCount
 var bIsJumping
 var jumpPower
-var jumpMax = -600
+var jumpMax = -550
+
+
+var speed = 350
+var acceleration = 50
+var friction = 70
 
 func _physics_process(delta):
 	playerGravity(delta)
 	playerMovement()
 	
 func playerMovement():
+	
+	var inputDirection: Vector2 = inputDirection()
+	if inputDirection() != Vector2.ZERO:
+		accelarate(inputDirection)
+		#animation walking anims
+	else:
+		pass
+		#addFrictiom()
+		#idle anims here
 	playerJump()
 	move_and_slide()
 	
@@ -39,14 +53,36 @@ func  playerJump():
 			
 	if bIsJumping:
 		if timerCount < 3:
-			jumpPower -= 6
+			jumpPower -= 10
+			if jumpPower > jumpMax:
+				jumpPower -= 15
+			elif jumpPower <= jumpMax:
+				jumpPower = jumpMax
 			print("jumpPower::if " , jumpPower)
+		elif timerCount >= 3:
+			jumpPower = jumpMax
+			print("jumpPower::else " , jumpPower)
+		"""
 		else:
 			jumpPower = jumpMax
 			print("jumpPower::else " , jumpPower)
-	else: 
+		"""
+	else:
 		pass
-		#velocity.y += gravity
+		
+
+func inputDirection() -> Vector2:
+	#the vetor2 is zero only in this function 
+	var inputDirection = Vector2.ZERO
+	inputDirection.x = Input.get_axis("ui_left", "ui_right")
+	inputDirection = inputDirection.normalized()
+	return inputDirection
+	
+func accelarate(direction):
+	velocity = velocity.move_toward(speed * direction, acceleration)
+	
+func addFrictiom():
+	velocity = velocity.move_toward(Vector2.ZERO, friction)
 			
 func timerTimeOut():
 	timerCount += 1
