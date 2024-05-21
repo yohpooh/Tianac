@@ -1,13 +1,18 @@
 extends CharacterBody2D
 
 @onready var timer: Timer = $Timer
-@export var gravity = 500
+@export var gravity = 700
 
 var timerCount
 var bIsJumping
-var jumpPower
-var jumpMax = -550
+var jumpPower = 0
+var jumpMax = -700
+var jumpTimeToPeak : float = 1.0
+var jumpTimeToDescent : float = 0.4
 
+@onready var jumpVelocity : float = ((2.0 * jumpPower) / jumpTimeToPeak) * -1.0
+@onready var jumpGravity : float = ((2.0 * jumpPower) / (jumpTimeToPeak * jumpTimeToPeak)) * -1.0
+@onready var fallGravity : float = ((2.0 * jumpPower) / (jumpTimeToDescent * jumpTimeToDescent)) * -1.0
 
 var speed = 350
 var acceleration = 50
@@ -18,38 +23,45 @@ func _physics_process(delta):
 	playerMovement()
 	
 func playerMovement():
-	
 	var inputDirection: Vector2 = inputDirection()
 	if inputDirection() != Vector2.ZERO:
 		accelarate(inputDirection)
 		#animation walking anims
 	else:
-		pass
-		#addFrictiom()
+		if is_on_floor():
+			addFrictiom()
 		#idle anims here
 	playerJump()
 	move_and_slide()
 	
 func playerGravity(delta):
-	if not is_on_floor():
+	if velocity.y < 0.0:
+		velocity.y += jumpGravity * delta
+	elif velocity.y > 0.0:
+		velocity.y += fallGravity * delta
+	else:
 		velocity.y += gravity * delta
 		
 func  playerJump():
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		timerCount = 0
 		jumpPower = 0
 		bIsJumping = true
 		timer.start()
-	if  Input.is_action_just_released("ui_accept"):
+	elif  Input.is_action_just_released("ui_accept") and is_on_floor():
 		bIsJumping = false
 		timer.stop()
 		if timerCount < 1:
 			print("tapped")
-			velocity.y = jumpPower
+			#velocity.y = jumpPower
+			velocity.y = jumpVelocity
 			#print(timerCount)
 		else:
 			print("hold for ", timerCount ," second/s")
 			velocity.y = jumpPower
+	else:
+		pass
+		#addFrictiom()
 			
 	if bIsJumping:
 		if timerCount < 3:
@@ -69,6 +81,8 @@ func  playerJump():
 		"""
 	else:
 		pass
+		#if not is_on_floor():
+			#velocity.y += gravity
 		
 
 func inputDirection() -> Vector2:
@@ -76,6 +90,7 @@ func inputDirection() -> Vector2:
 	var inputDirection = Vector2.ZERO
 	inputDirection.x = Input.get_axis("ui_left", "ui_right")
 	inputDirection = inputDirection.normalized()
+	#print(inputDirection)
 	return inputDirection
 	
 func accelarate(direction):
