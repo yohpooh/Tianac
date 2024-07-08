@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://daqimoqxa2s7q"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_rbsgp"]
+[ext_resource type="Texture2D" uid="uid://b5aiuwl3ow2ri" path="res://assets/pre-tiles/finalPlayer.png" id="2_rqift"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_17fng"]
+size = Vector2(13, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jofbm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rqift")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_rbsgp")
+gravity = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3.5, 11)
+shape = SubResource("RectangleShape2D_17fng")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
+sprite_frames = SubResource("SpriteFrames_jofbm")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="Timer" to="." method="timerTimeOut"]

@@ -1,5 +1,70 @@
 extends CharacterBody2D
 
+# Third Logic Attempt with basic movement but different approach with the diffculty
+
+# movement adjustable values
+var moveSpeed = 300.0
+#var acceleration = 50
+#var friction = 70
+
+# jump adjustable values
+var jumpHeight : float = 100.0
+var jumpTimeToPeak : float = 0.5
+var jumpTimeToDescent : float = 0.4
+
+	# jump gravity calculations
+@onready var jumpVelocity : float = ((2.0 * jumpHeight) / jumpTimeToPeak) * -1.0
+@onready var jumpGravity : float = ((-2.0 * jumpHeight) / (jumpTimeToPeak * jumpTimeToPeak)) * -1.0
+@onready var fallGravity : float = ((-2.0 * jumpHeight) / (jumpTimeToDescent * jumpTimeToDescent)) * -1.0
+	
+
+func _physics_process(delta):
+	player_gravity(delta)
+	player_movement()
+
+func player_movement():
+	# Handles the descent of the player
+	var horizontal := 0.0
+	if Input.is_action_pressed("left"):
+		horizontal -= 1.0
+	if Input.is_action_pressed("right"):
+		horizontal += 1.0
+		
+	velocity.x += horizontal * moveSpeed
+	
+	# Handle the jump when click the spacebar
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		velocity.y = jumpVelocity
+		print("Jump Clicked!!")
+		
+	# Get the input direction and handle the movement/deceleration.
+	var inputDirection = Input.get_axis("ui_left", "ui_right")
+	if inputDirection:
+		velocity.x = inputDirection * moveSpeed
+		#velocity.x = move_toward(velocity.x, inputDirection * moveSpeed, acceleration)
+		#add_friction(delta)
+	else:
+		velocity.x = move_toward(velocity.x, 0, moveSpeed)
+	print("Input Direction: ", inputDirection)
+	
+	move_and_slide()
+
+func player_gravity(delta):
+	print("Jump Gravity: ", jumpGravity, " Fall Gravity: ", jumpVelocity)
+	if not is_on_floor():
+		if velocity.y < 0.0:
+			velocity.y += jumpGravity * delta
+		else:
+			velocity.y += fallGravity * delta
+
+func add_friction(delta):
+	velocity.x -= .02 * delta
+	print(velocity)
+	#print("SLOW")
+		
+
+"""
+# Second Logic Attempt with charging jump
 @onready var timer: Timer = $Timer
 @export var gravity = 700
 
@@ -23,6 +88,8 @@ func _physics_process(delta):
 	playerMovement()
 	
 func playerMovement():
+	velocity.x = get_input_velocity() * speed
+	
 	var inputDirection: Vector2 = inputDirection()
 	if inputDirection() != Vector2.ZERO:
 		accelarate(inputDirection)
@@ -37,10 +104,8 @@ func playerMovement():
 func playerGravity(delta):
 	if velocity.y < 0.0:
 		velocity.y += jumpGravity * delta
-	elif velocity.y > 0.0:
-		velocity.y += fallGravity * delta
 	else:
-		velocity.y += gravity * delta
+		velocity.y += fallGravity * delta
 		
 func  playerJump():
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -60,8 +125,7 @@ func  playerJump():
 			print("hold for ", timerCount ," second/s")
 			velocity.y = jumpPower
 	else:
-		pass
-		#addFrictiom()
+		addFrictiom()
 			
 	if bIsJumping:
 		if timerCount < 3:
@@ -74,11 +138,6 @@ func  playerJump():
 		elif timerCount >= 3:
 			jumpPower = jumpMax
 			print("jumpPower::else " , jumpPower)
-		"""
-		else:
-			jumpPower = jumpMax
-			print("jumpPower::else " , jumpPower)
-		"""
 	else:
 		pass
 		#if not is_on_floor():
@@ -93,6 +152,16 @@ func inputDirection() -> Vector2:
 	#print(inputDirection)
 	return inputDirection
 	
+func get_input_velocity() -> float:
+	var horizontal := 0.0
+	
+	if Input.is_action_pressed("left"):
+		horizontal -= 1.0
+	if Input.is_action_pressed("right"):
+		horizontal += 1.0
+	
+	return horizontal
+	
 func accelarate(direction):
 	velocity = velocity.move_toward(speed * direction, acceleration)
 	
@@ -104,6 +173,7 @@ func timerTimeOut():
 	print("charging")
 	print(timerCount)
 	#queue_free()
+"""
 
 """
 const speed = 350
