@@ -15,7 +15,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0s63m"]
-size = Vector2(16, 22)
+size = Vector2(16, 18)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0x1jc"]
 radius = 8.1
@@ -30,7 +30,7 @@ scale = Vector2(1.03125, 1)
 sprite_frames = SubResource("SpriteFrames_jofbm")
 
 [node name="CollisionShapeRect" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 6)
+position = Vector2(-3, 4)
 shape = SubResource("RectangleShape2D_0s63m")
 
 [node name="CollisionShapeCircle" type="CollisionShape2D" parent="."]

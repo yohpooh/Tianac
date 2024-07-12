@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "36540f0db8b8e59b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "TODO.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,7 +159,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "88a6236302eae1ed",
+  "active": "36540f0db8b8e59b",
   "lastOpenFiles": [
     "DONE.md",
     "TODO.md"
