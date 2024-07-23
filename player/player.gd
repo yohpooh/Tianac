@@ -1,12 +1,45 @@
 extends CharacterBody2D
 
+const ACCELERATION = 3000
+const MAX_SPEED = 18000
+const LIMIT_SPEED_Y = 1200
+const JUMP_HEIGHT = 36000
+const MIN_JUMP_HEIGHT = 12000
+const MAX_COYOTE_TIME = 6
+const JUMP_BUFFER_TIME = 10
+const WALL_JUMP_AMOUNT = 18000
+const WALL_JUMP_TIME = 10
+const WALL_SLIDE_FACTOR = 0.8
+const WALL_HORIZONTAL_TIME = 30
+const GRAVITY = 2100
+const DASH_SPEED = 36000
+
+var coyoteTimer = 0
+var jumpBufferTimer = 0
+var wallJumpTimer = 0
+var wallHorizontalTimer = 0
+var dashTime = 0
+
+var canJump = false
+var friction = false
+var wall_sliding = false
+var trail = false
+var isDashing = false
+var hasDashed = false
+var isGrabbing = false
+
+
+
+
+
+"""
 # movement adjustable values
 var moveSpeed = 300.0
-var acceleration = 55
+var acceleration = 40
 #var friction = 70
 
 # jump adjustale variables
-var gravity: float = 60
+var gravity: float = 55
 var jumpBufferTime: int = 10
 var cayoteTime: int = 10
 
@@ -49,12 +82,15 @@ func player_movement():
 		jumpBufferCounter -= 1
 	
 	if jumpBufferCounter > 0 and cayoteCounter > 0:
+		#print("jumpVelocity", jumpVelocity + 200)
+		# tentative suggestion if you want to make the second jump to be a little bit smaller add 200 because the jump is -1000 the second jump will be -800
 		velocity.y = jumpVelocity
 		jumpBufferCounter = 0
 		cayoteCounter = 0
 		
 	# Handle the jump when click the spacebar
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		#print("jumpVelocity", jumpVelocity)
 		velocity.y = jumpVelocity
 		#print("Jump Clicked!!")
 		
@@ -66,17 +102,7 @@ func player_movement():
 		horizontal += 1.0
 		
 	velocity.x += horizontal * moveSpeed
-	
-	
-	"""
-	var inputDirection  = Input.get_axis("ui_left", "ui_right")
-	if inputDirection:
-		velocity.x = inputDirection * moveSpeed
-		#animation walking anims
-	else:
-		velocity.x = move_toward(velocity.x, 0, moveSpeed)
-		#idle anims here
-	"""
+
 	# Get the input direction and handle the movement/deceleration.
 	# i added the acceleration for the smoother movement of the character
 	if Input.is_action_pressed("ui_right") and not Input.is_action_pressed("ui_left"):
@@ -101,7 +127,6 @@ func player_gravity(delta):
 	else:
 		velocity.y += gravity * delta
 
-"""
 # player adjustable variables
 var maxSpeed: float = 300.0
 var gravity: float = 55
