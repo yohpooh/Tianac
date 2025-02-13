@@ -16,7 +16,9 @@
                 "file": "TODO.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "TODO"
             }
           },
           {
@@ -28,11 +30,49 @@
                 "file": "TODO.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "TODO"
+            }
+          },
+          {
+            "id": "819a25e0802aa30c",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.7"
+              },
+              "icon": "lucide-file",
+              "title": "Release Notes 1.6.7"
+            }
+          },
+          {
+            "id": "866bbf2847f9ec15",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.7.4"
+              },
+              "icon": "lucide-file",
+              "title": "Release Notes 1.7.4"
+            }
+          },
+          {
+            "id": "39c3f253bca20eef",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.7.5"
+              },
+              "icon": "lucide-file",
+              "title": "Release Notes 1.7.5"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -52,7 +92,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -67,7 +109,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -75,7 +119,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
@@ -106,7 +152,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for TODO"
             }
           },
           {
@@ -118,7 +166,9 @@
                 "file": "TODO.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from TODO"
             }
           },
           {
@@ -129,7 +179,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -139,7 +191,9 @@
               "type": "outline",
               "state": {
                 "file": "TODO.md"
-              }
+              },
+              "icon": "lucide-list",
+              "title": "Outline of TODO"
             }
           }
         ]
@@ -159,7 +213,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "36540f0db8b8e59b",
+  "active": "39c3f253bca20eef",
   "lastOpenFiles": [
     "DONE.md",
     "TODO.md"

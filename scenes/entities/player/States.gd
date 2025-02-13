@@ -5,3 +5,4 @@ extends Node
 @onready var playerMove = $Move
 @onready var playerFall = $Fall
 @onready var playerSlide = $Slide
+@onready var playerClimb = $Climb

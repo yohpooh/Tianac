@@ -11,7 +11,7 @@ func update(delta):
 		return States.playerJump
 	if Player.is_on_floor():
 		return States.playerIdle
-	if Player.get_next_to_wall() != Vector2.ZERO: 
+	if Player.get_next_to_wall() != null: 
 		return States.playerSlide
 	return null
 		

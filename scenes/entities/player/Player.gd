@@ -11,7 +11,7 @@ var climbInput = false
 #Dash Input
 var dashInput = false
 #Player Physics
-var SPEED = 80
+var SPEED = 80.0
 var gravityVariable = 0
 var tileSize = 32
 var MAX_JUMP_HEIGHT = tileSize * 3 + .35
@@ -73,7 +73,7 @@ func get_next_to_wall():
 			else:
 				return Vector2.LEFT
 				
-	return Vector2.ZERO
+	return null
 	"""
 	#Right Side
 	RaycastRightTop.force_raycast_update()
