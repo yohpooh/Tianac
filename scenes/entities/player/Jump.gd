@@ -15,7 +15,7 @@ func update(delta):
 		return States.playerFall
 #	if Player.get_next_to_wall() != null:
 #		return States.playerSlide
-	if Player.dashInput:
+	if Player.dashInput and Player.canDash:
 		return States.playerDash
 	return null 
 	

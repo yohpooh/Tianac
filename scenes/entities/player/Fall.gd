@@ -9,12 +9,16 @@ func update(delta):
 	Player.gravity(delta)
 	if Player.jumpInputActuation and canJump:
 		return States.playerJump
+	
 	if Player.is_on_floor():
 		return States.playerIdle
+	
 #	if Player.get_next_to_wall() != null: 
 #		return States.playerSlide
-	if Player.dashInput:
+	
+	if Player.dashInput and Player.canDash:
 		return States.playerDash
+	
 	return null
 		
 func enter_state():

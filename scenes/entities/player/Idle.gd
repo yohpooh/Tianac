@@ -15,6 +15,9 @@ func update(delta):
 	if Player.jumpInputActuation == true:
 		return States.playerJump
 		
-	if Player.dashInput:
+	if Player.dashInput and Player.canDash:
 		return States.playerDash
 	return null
+	
+func enter_state():
+	Player.canDash = true

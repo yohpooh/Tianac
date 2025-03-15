@@ -4,3 +4,8 @@
 
 [node name="dash" type="Node"]
 script = ExtResource("1_wnfwx")
+
+[node name="DashDuration" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="DashDuration" to="." method="_on_timer_timeout"]

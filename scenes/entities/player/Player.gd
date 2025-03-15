@@ -9,8 +9,10 @@ var jumpInputActuation = false
 
 #Dash Input
 var dashInput = false
+var canDash = true
+
 #Player Physics
-var SPEED = 200.0
+var SPEED = 190.0
 var gravityVariable = 0
 var tileSize = 32
 var MAX_JUMP_HEIGHT = tileSize * 4 + .35
@@ -20,6 +22,7 @@ var jumpDuration = 0.3
 var springVelocity
 var maxJumpVelocity
 var minJumpVelocity
+var lastDirection = Vector2.RIGHT
 
 #Player States
 var currentState = null
@@ -29,7 +32,7 @@ var previousState =  null
 @onready var States = $States
 
 func _ready():
-	setVelocityValues()
+	set_velocity_values()
 	for state in States.get_children():
 		state.Player = self
 		state.States = States
@@ -37,7 +40,7 @@ func _ready():
 	previousState = States.playerIdle
 	currentState = States.playerIdle
 	
-func setVelocityValues():
+func set_velocity_values():
 	gravityVariable = 2 * MAX_JUMP_HEIGHT / pow(jumpDuration, 2)
 	maxJumpVelocity = -sqrt(2 * gravityVariable * MAX_JUMP_HEIGHT)
 	minJumpVelocity = -sqrt(2 * gravityVariable * MIN_JUMP_HEIGHT)
@@ -45,11 +48,12 @@ func setVelocityValues():
 	
 func _physics_process(delta):
 	player_input()
-	changeState(currentState.update(delta))
+	change_state(currentState.update(delta))
 	move_and_slide()
 	$Label.text = str(currentState.get_name())
+	#print("player velocity: ", velocity)
 	
-func changeState(inputState):
+func change_state(inputState):
 	if inputState != null:
 		previousState = currentState
 		currentState = inputState
@@ -84,7 +88,7 @@ func player_input():
 		jumpInput = false
 		
 	#Player Dash Input
-	if Input.is_action_pressed("Dash"):
+	if Input.is_action_just_pressed("Dash"):
 		dashInput = true
 	else:
 		dashInput = false
