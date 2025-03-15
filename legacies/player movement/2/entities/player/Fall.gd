@@ -1,4 +1,4 @@
-extends "states.gd"
+extends "state.gd"
 
 var canJump = true
 @export var cayoteJumpDuration = .2
@@ -11,10 +11,8 @@ func update(delta):
 		return States.playerJump
 	if Player.is_on_floor():
 		return States.playerIdle
-#	if Player.get_next_to_wall() != null: 
-#		return States.playerSlide
-	if Player.dashInput:
-		return States.playerDash
+	if Player.get_next_to_wall() != null: 
+		return States.playerSlide
 	return null
 		
 func enter_state():

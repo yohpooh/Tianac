@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbpiisxegdu31"]
+[gd_scene load_steps=2 format=3 uid="uid://c0pjdc80y35gd"]
 
-[ext_resource type="Script" path="res://scenes/entities/player/Move.gd" id="1_4c1sa"]
+[ext_resource type="Script" path="res://scenes/entities/player/move.gd" id="1_yrvf5"]
 
-[node name="Move" type="Node"]
-script = ExtResource("1_4c1sa")
+[node name="move" type="Node"]
+script = ExtResource("1_yrvf5")

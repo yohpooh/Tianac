@@ -1,8 +1,19 @@
 extends Node
 
-@onready var playerIdle = $Idle
-@onready var playerJump = $Jump
-@onready var playerMove = $Move
-@onready var playerFall = $Fall
-@onready var playerSlide = $Slide
-@onready var playerClimb = $Climb
+@onready var playerIdle = $idle
+@onready var playerJump = $jump
+@onready var playerMove = $move
+@onready var playerFall = $fall
+@onready var playerDash = $dash
+
+var Player = null
+var States = null
+
+func player_movement():
+	Player.velocity.x = Player.movementInput.x * Player.SPEED
+	
+func exit_state():
+	pass
+	
+func enter_state():
+	pass

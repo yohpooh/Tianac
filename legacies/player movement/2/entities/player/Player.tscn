@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://23jhaio8aics"]
+
+[ext_resource type="PackedScene" uid="uid://bu5ju05kvaqei" path="res://scenes/entities/player/Fall.tscn" id="1_2ky6l"]
+[ext_resource type="Script" path="res://scenes/entities/player/Player.gd" id="1_f2re8"]
+[ext_resource type="PackedScene" uid="uid://nwpx607tg60a" path="res://scenes/entities/player/Idle.tscn" id="2_wpipn"]
+[ext_resource type="Texture2D" uid="uid://dhovsrk5ja5f5" path="res://assets/pre-tiles/pre-player-8x16.png" id="2_wr3q0"]
+[ext_resource type="Script" path="res://scenes/entities/player/States.gd" id="2_x1761"]
+[ext_resource type="PackedScene" uid="uid://bnsvqlqsqubyp" path="res://scenes/entities/player/Jump.tscn" id="3_cry5x"]
+[ext_resource type="PackedScene" uid="uid://cbpiisxegdu31" path="res://scenes/entities/player/Move.tscn" id="4_624oj"]
+[ext_resource type="PackedScene" uid="uid://dyc1o8p84b5g4" path="res://scenes/entities/player/Slide.tscn" id="8_xh6yc"]
+[ext_resource type="PackedScene" uid="uid://mgxpje8viref" path="res://scenes/entities/player/Climb.tscn" id="9_qlavi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e24dv"]
+size = Vector2(8, 16)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_f2re8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_wr3q0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_e24dv")
+
+[node name="States" type="Node" parent="."]
+script = ExtResource("2_x1761")
+
+[node name="Fall" parent="States" instance=ExtResource("1_2ky6l")]
+
+[node name="Idle" parent="States" instance=ExtResource("2_wpipn")]
+
+[node name="Jump" parent="States" instance=ExtResource("3_cry5x")]
+
+[node name="Move" parent="States" instance=ExtResource("4_624oj")]
+
+[node name="Slide" parent="States" instance=ExtResource("8_xh6yc")]
+
+[node name="Climb" parent="States" instance=ExtResource("9_qlavi")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -56.0
+offset_top = -45.0
+offset_right = 57.0
+offset_bottom = -22.0
+text = "Current State: "
+
+[node name="Raycasts" type="Node2D" parent="."]
+
+[node name="RightTop" type="RayCast2D" parent="Raycasts"]
+position = Vector2(0, -8)
+target_position = Vector2(10, 0)
+collision_mask = 2
+
+[node name="RightBottom" type="RayCast2D" parent="Raycasts"]
+position = Vector2(0, 8)
+target_position = Vector2(10, 0)
+collision_mask = 2
+
+[node name="LeftTop" type="RayCast2D" parent="Raycasts"]
+position = Vector2(0, -8)
+target_position = Vector2(-10, 0)
+collision_mask = 2
+
+[node name="LeftBottom" type="RayCast2D" parent="Raycasts"]
+position = Vector2(0, 8)
+target_position = Vector2(-10, 0)
+collision_mask = 2

@@ -1,4 +1,4 @@
-extends "states.gd"
+extends "state.gd"
 
 func update(delta):
 	player_movement()
@@ -14,7 +14,4 @@ func update(delta):
 		
 	if Player.jumpInputActuation == true:
 		return States.playerJump
-		
-	if Player.dashInput:
-		return States.playerDash
 	return null

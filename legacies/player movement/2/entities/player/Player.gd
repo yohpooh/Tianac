@@ -6,16 +6,16 @@ var movementInput = Vector2.ZERO
 #Jump Input
 var jumpInput = false
 var jumpInputActuation = false
-
+#CLimb Input
+var climbInput = false
 #Dash Input
 var dashInput = false
 #Player Physics
-var SPEED = 200.0
+var SPEED = 180.0
 var gravityVariable = 0
 var tileSize = 32
-var MAX_JUMP_HEIGHT = tileSize * 4 + .35
+var MAX_JUMP_HEIGHT = tileSize * 3 + .35
 var MIN_JUMP_HEIGHT = tileSize * 2 + .35
-#var SPRING_JUMP_HEIGHT = tileSize * 4 + .35
 var jumpDuration = 0.3
 var springVelocity
 var maxJumpVelocity
@@ -27,6 +27,13 @@ var previousState =  null
 
 #Player State
 @onready var States = $States
+
+#Player Raycasts
+@onready var RaycastNode = $Raycasts
+@onready var RaycastRightTop = $Raycasts/RightTop
+@onready var RaycastRightBottom = $Raycasts/RightBottom
+@onready var RaycastLeftTop = $Raycasts/LeftTop
+@onready var RaycastLeftBottom = $Raycasts/LeftBottom
 
 func _ready():
 	setVelocityValues()
@@ -47,7 +54,7 @@ func _physics_process(delta):
 	player_input()
 	changeState(currentState.update(delta))
 	move_and_slide()
-	$Label.text = str(currentState.get_name())
+	$Label.text = str("Current State: " + currentState.get_name())
 	
 func changeState(inputState):
 	if inputState != null:
@@ -57,6 +64,33 @@ func changeState(inputState):
 		previousState.exit_state()
 		currentState.enter_state() 
 		
+func get_next_to_wall():
+	for raycast in RaycastNode.get_children():
+		raycast.force_raycast_update()
+		if raycast.is_colliding():
+			if raycast.target_position.x > 0:
+				return Vector2.RIGHT
+			else:
+				return Vector2.LEFT
+				
+	return null
+	"""
+	#Right Side
+	RaycastRightTop.force_raycast_update()
+	if RaycastRightTop.is_colliding():
+		return Vector2.RIGHT
+	RaycastRightBottom.force_raycast_update()
+	if RaycastRightBottom.is_colliding():
+		return Vector2.RIGHT
+		
+	#Left Side
+	RaycastLeftTop.force_raycast_update()
+	if RaycastLeftTop.is_colliding():
+		return Vector2.LEFT
+	RaycastLeftBottom.force_raycast_update()
+	if RaycastLeftBottom.is_colliding():
+		return Vector2.LEFT
+	"""
 
 func player_input():
 	movementInput = Vector2.ZERO
@@ -83,6 +117,12 @@ func player_input():
 	else:
 		jumpInput = false
 		
+	#Player Climb Input
+	if Input.is_action_pressed("Climb"):
+		climbInput = true
+	else:
+		climbInput = false
+		
 	#Player Dash Input
 	if Input.is_action_pressed("Dash"):
 		dashInput = true
@@ -93,4 +133,4 @@ func gravity(delta):
 	if !is_on_floor():
 		velocity.y += gravityVariable * delta
 	pass
-
+	

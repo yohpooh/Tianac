@@ -1,4 +1,4 @@
-extends "states.gd"
+extends "state.gd"
 
 func update(delta):
 	player_movement()
@@ -9,8 +9,6 @@ func update(delta):
 		return States.playerJump
 	if Player.velocity.x == 0:
 		return States.playerIdle
-	if Player.dashInput:
-		return States.playerDash
 	return null
 	
 func player_movement():

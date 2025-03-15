@@ -1,70 +1,41 @@
-[gd_scene load_steps=11 format=3 uid="uid://23jhaio8aics"]
+[gd_scene load_steps=10 format=3 uid="uid://o7irxsa3d8cm"]
 
-[ext_resource type="PackedScene" uid="uid://bu5ju05kvaqei" path="res://scenes/entities/player/Fall.tscn" id="1_2ky6l"]
-[ext_resource type="Script" path="res://scenes/entities/player/Player.gd" id="1_f2re8"]
-[ext_resource type="PackedScene" uid="uid://nwpx607tg60a" path="res://scenes/entities/player/Idle.tscn" id="2_wpipn"]
-[ext_resource type="Texture2D" uid="uid://dhovsrk5ja5f5" path="res://assets/pre-tiles/pre-player-8x16.png" id="2_wr3q0"]
-[ext_resource type="Script" path="res://scenes/entities/player/States.gd" id="2_x1761"]
-[ext_resource type="PackedScene" uid="uid://bnsvqlqsqubyp" path="res://scenes/entities/player/Jump.tscn" id="3_cry5x"]
-[ext_resource type="PackedScene" uid="uid://cbpiisxegdu31" path="res://scenes/entities/player/Move.tscn" id="4_624oj"]
-[ext_resource type="PackedScene" uid="uid://dyc1o8p84b5g4" path="res://scenes/entities/player/Slide.tscn" id="8_xh6yc"]
-[ext_resource type="PackedScene" uid="uid://mgxpje8viref" path="res://scenes/entities/player/Climb.tscn" id="9_qlavi"]
+[ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_8e53y"]
+[ext_resource type="Texture2D" uid="uid://1hx2khekxihu" path="res://assets/pre-tiles/32x32 pre-player.aseprite" id="1_y7e0v"]
+[ext_resource type="Script" path="res://scenes/entities/player/states.gd" id="3_4yoo4"]
+[ext_resource type="PackedScene" uid="uid://ctwff3rl4k7g" path="res://scenes/entities/player/fall.tscn" id="4_6xvem"]
+[ext_resource type="PackedScene" uid="uid://wuh0eb8rw62a" path="res://scenes/entities/player/idle.tscn" id="5_ijn0m"]
+[ext_resource type="PackedScene" uid="uid://dbauc4go1qhda" path="res://scenes/entities/player/jump.tscn" id="6_21pyo"]
+[ext_resource type="PackedScene" uid="uid://c0pjdc80y35gd" path="res://scenes/entities/player/move.tscn" id="7_dy123"]
+[ext_resource type="PackedScene" uid="uid://cayvdbgycbh0j" path="res://scenes/entities/player/dash.tscn" id="8_apsp2"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e24dv"]
-size = Vector2(8, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ruvy5"]
+size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_f2re8")
+script = ExtResource("1_8e53y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_wr3q0")
+texture = ExtResource("1_y7e0v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_e24dv")
+shape = SubResource("RectangleShape2D_ruvy5")
 
 [node name="States" type="Node" parent="."]
-script = ExtResource("2_x1761")
+script = ExtResource("3_4yoo4")
 
-[node name="Fall" parent="States" instance=ExtResource("1_2ky6l")]
+[node name="fall" parent="States" instance=ExtResource("4_6xvem")]
 
-[node name="Idle" parent="States" instance=ExtResource("2_wpipn")]
+[node name="idle" parent="States" instance=ExtResource("5_ijn0m")]
 
-[node name="Jump" parent="States" instance=ExtResource("3_cry5x")]
+[node name="jump" parent="States" instance=ExtResource("6_21pyo")]
 
-[node name="Move" parent="States" instance=ExtResource("4_624oj")]
+[node name="move" parent="States" instance=ExtResource("7_dy123")]
 
-[node name="Slide" parent="States" instance=ExtResource("8_xh6yc")]
-
-[node name="Climb" parent="States" instance=ExtResource("9_qlavi")]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+[node name="dash" parent="States" instance=ExtResource("8_apsp2")]
 
 [node name="Label" type="Label" parent="."]
-offset_left = -56.0
-offset_top = -45.0
-offset_right = 57.0
-offset_bottom = -22.0
-text = "Current State: "
-
-[node name="Raycasts" type="Node2D" parent="."]
-
-[node name="RightTop" type="RayCast2D" parent="Raycasts"]
-position = Vector2(0, -8)
-target_position = Vector2(10, 0)
-collision_mask = 2
-
-[node name="RightBottom" type="RayCast2D" parent="Raycasts"]
-position = Vector2(0, 8)
-target_position = Vector2(10, 0)
-collision_mask = 2
-
-[node name="LeftTop" type="RayCast2D" parent="Raycasts"]
-position = Vector2(0, -8)
-target_position = Vector2(-10, 0)
-collision_mask = 2
-
-[node name="LeftBottom" type="RayCast2D" parent="Raycasts"]
-position = Vector2(0, 8)
-target_position = Vector2(-10, 0)
-collision_mask = 2
+offset_left = -20.0
+offset_top = -47.0
+offset_right = 20.0
+offset_bottom = -24.0
