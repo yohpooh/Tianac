@@ -5,6 +5,7 @@ extends Node
 @onready var playerMove = $move
 @onready var playerFall = $fall
 @onready var playerDash = $dash
+@onready var playerSlide = $slide
 
 var Player = null
 var States = null
@@ -22,7 +23,7 @@ func player_movement():
 		elif Player.movementInput.x < 0:
 			Player.lastDirection = Vector2.LEFT
 	else:
-		Player.velocity.x = move_toward(Player.velocity.x, .0, Player.SPEED)
+		Player.velocity.x = move_toward(Player.velocity.x, 0, Player.SPEED)
 	
 	
 func exit_state():

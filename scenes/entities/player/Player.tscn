@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://o7irxsa3d8cm"]
+[gd_scene load_steps=12 format=3 uid="uid://o7irxsa3d8cm"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_8e53y"]
 [ext_resource type="Texture2D" uid="uid://1hx2khekxihu" path="res://assets/pre-tiles/32x32 pre-player.aseprite" id="1_y7e0v"]
@@ -8,9 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://dbauc4go1qhda" path="res://scenes/entities/player/jump.tscn" id="6_21pyo"]
 [ext_resource type="PackedScene" uid="uid://c0pjdc80y35gd" path="res://scenes/entities/player/move.tscn" id="7_dy123"]
 [ext_resource type="PackedScene" uid="uid://cayvdbgycbh0j" path="res://scenes/entities/player/dash.tscn" id="8_apsp2"]
+[ext_resource type="PackedScene" uid="uid://b0riq2pcf7kv6" path="res://scenes/entities/player/slide.tscn" id="9_428bm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ruvy5"]
 size = Vector2(32, 32)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rbxmr"]
+font_size = 9
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_8e53y")
@@ -34,8 +38,35 @@ script = ExtResource("3_4yoo4")
 
 [node name="dash" parent="States" instance=ExtResource("8_apsp2")]
 
-[node name="Label" type="Label" parent="."]
-offset_left = -20.0
-offset_top = -47.0
-offset_right = 20.0
-offset_bottom = -24.0
+[node name="slide" parent="States" instance=ExtResource("9_428bm")]
+
+[node name="PlayerLabel" type="Label" parent="."]
+offset_left = -28.0
+offset_top = -30.0
+offset_right = 28.0
+offset_bottom = -17.0
+text = "	"
+label_settings = SubResource("LabelSettings_rbxmr")
+horizontal_alignment = 1
+
+[node name="Raycasts" type="Node2D" parent="."]
+
+[node name="TopRight" type="RayCast2D" parent="Raycasts"]
+position = Vector2(0, -16)
+target_position = Vector2(16.5, 0)
+collision_mask = 2
+
+[node name="BottomRight" type="RayCast2D" parent="Raycasts"]
+position = Vector2(0, 16)
+target_position = Vector2(16.5, 0)
+collision_mask = 2
+
+[node name="TopLeft" type="RayCast2D" parent="Raycasts"]
+position = Vector2(0, -16)
+target_position = Vector2(-16.5, 0)
+collision_mask = 2
+
+[node name="BottomLeft" type="RayCast2D" parent="Raycasts"]
+position = Vector2(0, 16)
+target_position = Vector2(-16.5, 0)
+collision_mask = 2

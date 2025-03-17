@@ -28,8 +28,11 @@ var lastDirection = Vector2.RIGHT
 var currentState = null
 var previousState =  null
 
-#Player State
+#Player States
 @onready var States = $States
+
+#Player Raycasts
+@onready var Raycasts = $Raycasts
 
 func _ready():
 	set_velocity_values()
@@ -50,7 +53,7 @@ func _physics_process(delta):
 	player_input()
 	change_state(currentState.update(delta))
 	move_and_slide()
-	$Label.text = str(currentState.get_name())
+	$PlayerLabel.text = str("Player: ", currentState.get_name())
 	#print("player velocity: ", velocity)
 	
 func change_state(inputState):
@@ -97,4 +100,14 @@ func gravity(delta):
 	if !is_on_floor():
 		velocity.y += gravityVariable * delta
 	pass
+	
+func get_next_to_wall():
+	for raycast in Raycasts.get_children():
+		raycast.force_raycast_update()
+		if raycast.is_colliding():
+			if raycast.target_position.x > 0:
+				return Vector2.RIGHT
+			else:
+				return Vector2.LEFT
+	return null
 

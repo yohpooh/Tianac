@@ -16,6 +16,20 @@ func update(delta):
 			return States.playerFall
 	return null
 
+'
+	if Player.get_next_to_wall() != null:
+		print("Next to Wall")
+		if Player.get_next_to_wall() == Vector2.RIGHT:
+			print("Wall Right")
+			pass
+		else:
+			print("Wall Left")
+			pass
+	else:
+		print("Player not Next to Wall")
+'
+
+
 func enter_state():
 	Player.canDash = false
 	set_dash_direction(Player.movementInput)
