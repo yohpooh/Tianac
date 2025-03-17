@@ -20,13 +20,13 @@ Tile Size 32x32 final
 	🟩 Dash
 	🟩 Down push
 		🟩 if player is jumping and push the down button it will cancel the animation of gravity for fast descend
-	⬜ Acceleration
+	🟦 Acceleration
 
 ⬜ Camera Movement
 	 ⬜ Camera
 		 ⬜ Side Scrolling
 
-🟦 Difficulty
+⬜ Difficulty
 	 ⬜ Enemy
 		 ⬜ To be Determine..
 	 ⬜ Button
